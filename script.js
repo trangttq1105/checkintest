@@ -1,13 +1,11 @@
 ```javascript
 /* =========================================
    SOMSOM REGISTRATION TOOL
-   Prototype version
+   Prototype
    ========================================= */
 
 
-/* -----------------------------------------
-   COUNTRY SETTINGS
-   ----------------------------------------- */
+/* COUNTRY → TRENDING STRATEGY */
 
 const countryStrategies = {
 
@@ -100,12 +98,13 @@ const countryStrategies = {
         name: "PLAN 1",
         link: "#"
     }
+
 };
 
 
-/* -----------------------------------------
-   ELEMENTS
-   ----------------------------------------- */
+/* =========================================
+   GET ELEMENTS
+   ========================================= */
 
 const countrySelect =
     document.getElementById("countrySelect");
@@ -141,19 +140,42 @@ const sortCount =
     document.getElementById("sortCount");
 
 
-/* -----------------------------------------
-   DATA
-   ----------------------------------------- */
+/* =========================================
+   CHECK JAVASCRIPT
+   ========================================= */
 
-let registrations =
-    JSON.parse(
-        localStorage.getItem("somsomRegistrations")
-    ) || {};
+console.log("Somsom Registration script loaded successfully.");
 
 
-/* -----------------------------------------
+/* =========================================
+   LOAD DATA
+   ========================================= */
+
+let registrations = {};
+
+try {
+
+    registrations =
+        JSON.parse(
+            localStorage.getItem(
+                "somsomRegistrations"
+            )
+        ) || {};
+
+} catch (error) {
+
+    console.error(
+        "Could not load registration data:",
+        error
+    );
+
+    registrations = {};
+}
+
+
+/* =========================================
    SAVE DATA
-   ----------------------------------------- */
+   ========================================= */
 
 function saveData() {
 
@@ -161,37 +183,46 @@ function saveData() {
         "somsomRegistrations",
         JSON.stringify(registrations)
     );
+
 }
 
 
-/* -----------------------------------------
-   TOTAL
-   ----------------------------------------- */
+/* =========================================
+   TOTAL REGISTRATIONS
+   ========================================= */
 
 function getTotalRegistrations() {
 
-    return Object.values(registrations)
-        .reduce(
-            (total, count) => total + count,
-            0
-        );
+    let total = 0;
+
+    Object.values(registrations).forEach(
+        function(count) {
+
+            total += Number(count);
+
+        }
+    );
+
+    return total;
+
 }
 
 
-/* -----------------------------------------
+/* =========================================
    UPDATE TOTAL
-   ----------------------------------------- */
+   ========================================= */
 
 function updateTotal() {
 
     totalCount.textContent =
         getTotalRegistrations();
+
 }
 
 
-/* -----------------------------------------
-   DISPLAY COUNTRIES
-   ----------------------------------------- */
+/* =========================================
+   DISPLAY COUNTRY LIST
+   ========================================= */
 
 let currentSort = "alphabetical";
 
@@ -199,6 +230,7 @@ let currentSort = "alphabetical";
 function renderCountries() {
 
     countryList.innerHTML = "";
+
 
     let countries =
         Object.entries(registrations);
@@ -216,28 +248,49 @@ function renderCountries() {
     }
 
 
+    /* A-Z */
+
     if (currentSort === "alphabetical") {
 
         countries.sort(
-            (a, b) =>
-                a[0].localeCompare(b[0])
+            function(a, b) {
+
+                return a[0].localeCompare(b[0]);
+
+            }
         );
 
-    } else {
+    }
+
+
+    /* MOST JOINED */
+
+    else {
 
         countries.sort(
-            (a, b) => b[1] - a[1]
+            function(a, b) {
+
+                return b[1] - a[1];
+
+            }
         );
+
     }
 
 
     countries.forEach(
-        ([country, count]) => {
+        function(item) {
+
+            const country = item[0];
+            const count = item[1];
+
 
             const row =
                 document.createElement("div");
 
-            row.className = "country-row";
+            row.className =
+                "country-row";
+
 
             row.innerHTML = `
                 <span class="country-name">
@@ -249,25 +302,37 @@ function renderCountries() {
                 </span>
             `;
 
+
             countryList.appendChild(row);
+
         }
     );
+
 }
 
 
-/* -----------------------------------------
-   CONFIRM REGISTRATION
-   ----------------------------------------- */
+/* =========================================
+   CONFIRM BUTTON
+   ========================================= */
 
 confirmButton.addEventListener(
     "click",
-    function () {
+    function() {
+
+        console.log("Confirm button clicked.");
+
 
         const country =
             countrySelect.value;
 
 
-        /* Validation */
+        console.log(
+            "Selected country:",
+            country
+        );
+
+
+        /* CHECK COUNTRY */
 
         if (!country) {
 
@@ -275,44 +340,58 @@ confirmButton.addEventListener(
                 "Please select your country or region.";
 
             return;
+
         }
 
 
         errorMessage.textContent = "";
 
 
-        /* Create country if needed */
+        /* CREATE COUNTRY */
 
-        if (!registrations[country]) {
+        if (
+            !Object.prototype.hasOwnProperty.call(
+                registrations,
+                country
+            )
+        ) {
 
             registrations[country] = 0;
+
         }
 
 
-        /* Add one registration */
+        /* ADD REGISTRATION */
 
-        registrations[country]++;
+        registrations[country] =
+            Number(registrations[country]) + 1;
 
 
-        /* Number within this country */
+        /* PERSONAL NUMBER */
 
         const personalNumber =
             registrations[country];
 
 
-        /* Save */
+        console.log(
+            "Registration number:",
+            personalNumber
+        );
+
+
+        /* SAVE */
 
         saveData();
 
 
-        /* Get strategy */
+        /* GET STRATEGY */
 
         const strategy =
             countryStrategies[country] ||
             countryStrategies["Other"];
 
 
-        /* Display personal result */
+        /* SHOW PERSONAL RESULT */
 
         personalResult.textContent =
             `You are Somsom #${personalNumber} from ${country}.`;
@@ -326,39 +405,41 @@ confirmButton.addEventListener(
             strategy.link;
 
 
-        /* Show personal section */
+        /* SHOW RESULT CARD */
 
         personalSection.classList.remove(
             "hidden"
         );
 
 
-        /* Update statistics */
+        /* UPDATE STATISTICS */
 
         updateTotal();
 
         renderCountries();
 
 
-        /* Scroll to result */
+        /* SCROLL */
 
         personalSection.scrollIntoView({
-            behavior: "smooth"
+            behavior: "smooth",
+            block: "start"
         });
 
     }
 );
 
 
-/* -----------------------------------------
-   SORT BUTTONS
-   ----------------------------------------- */
+/* =========================================
+   SORT A-Z
+   ========================================= */
 
 sortAlphabetical.addEventListener(
     "click",
-    function () {
+    function() {
 
         currentSort = "alphabetical";
+
 
         sortAlphabetical.classList.add(
             "active"
@@ -368,16 +449,23 @@ sortAlphabetical.addEventListener(
             "active"
         );
 
+
         renderCountries();
+
     }
 );
 
 
+/* =========================================
+   SORT MOST JOINED
+   ========================================= */
+
 sortCount.addEventListener(
     "click",
-    function () {
+    function() {
 
         currentSort = "count";
+
 
         sortCount.classList.add(
             "active"
@@ -387,14 +475,16 @@ sortCount.addEventListener(
             "active"
         );
 
+
         renderCountries();
+
     }
 );
 
 
-/* -----------------------------------------
-   INITIAL LOAD
-   ----------------------------------------- */
+/* =========================================
+   INITIALIZE
+   ========================================= */
 
 updateTotal();
 
