@@ -1,5 +1,7 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,48 +15,91 @@
 
     <main class="container">
 
-        <h1>Somsoms Worldwide</h1>
+        <!-- HEADER -->
+        <header class="page-header">
+            <h1>Somsoms Worldwide</h1>
 
-        <p class="subtitle">
-            International Somsoms Registration
-        </p>
+            <p>
+                International Somsoms Registration
+            </p>
+        </header>
 
+
+        <!-- TOTAL SOMSOMS -->
         <section class="total-box">
+
             <h2>Total Somsoms</h2>
-            <div id="total">Loading...</div>
+
+            <div id="total">
+                Loading...
+            </div>
+
+            <p class="total-label">
+                Somsoms have registered worldwide
+            </p>
+
         </section>
 
+
+        <!-- COUNTRIES -->
         <section class="countries-box">
 
             <div class="section-header">
-                <h2>Countries</h2>
+
+                <div>
+                    <h2>Countries</h2>
+
+                    <p class="section-description">
+                        Registered Somsoms by country
+                    </p>
+                </div>
 
                 <select id="sortSelect">
-                    <option value="count">Participants</option>
-                    <option value="name">A–Z</option>
+                    <option value="count">
+                        Participants
+                    </option>
+
+                    <option value="name">
+                        A–Z
+                    </option>
                 </select>
+
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Country</th>
-                        <th>Participants</th>
-                    </tr>
-                </thead>
 
-                <tbody id="countryTable">
-                    <tr>
-                        <td colspan="2">Loading...</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Participants</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="countryTable">
+
+                        <tr>
+                            <td colspan="2">
+                                Loading...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </section>
 
     </main>
 
+
     <script src="script.js?v=2"></script>
 
 </body>
+
 </html>
+```
