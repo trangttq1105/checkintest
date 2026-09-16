@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Somsom Registration</title>
+    <title>Somsoms Worldwide</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,103 +13,46 @@
 
     <main class="container">
 
-        <!-- HEADER -->
-        <header class="header">
-            <h1>Somsom Registration</h1>
+        <h1>Somsoms Worldwide</h1>
 
-            <p class="subtitle">
-                Join Somsoms from around the world
-            </p>
-        </header>
+        <p class="subtitle">
+            International Somsoms Registration
+        </p>
 
-
-        <!-- REGISTRATION -->
-        <section class="registration-card">
-
-            <label for="countrySelect">
-                Choose Your Country or Region
-            </label>
-
-            <select id="countrySelect">
-                <option value="">
-                    Select your country or region
-                </option>
-            </select>
-
-            <button id="confirmButton">
-                CONFIRM
-            </button>
-
-            <p id="errorMessage" class="error-message"></p>
-
+        <section class="total-box">
+            <h2>Total Somsoms</h2>
+            <div id="total">Loading...</div>
         </section>
 
+        <section class="countries-box">
 
-        <!-- RESULTS -->
-        <section id="results" class="results hidden">
+            <div class="section-header">
+                <h2>Countries</h2>
 
-            <!-- PERSONAL RESULT -->
-            <div class="card personal-card">
-
-                <div class="card-title">
-                    YOUR SOMSOM NUMBER
-                </div>
-
-                <div id="personalResult" class="personal-result">
-                    You are the 3rd Somsom from Vietnam.
-                </div>
-
+                <select id="sortSelect">
+                    <option value="count">Participants</option>
+                    <option value="name">A–Z</option>
+                </select>
             </div>
 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Participants</th>
+                    </tr>
+                </thead>
 
-            <!-- COMMUNITY RESULT -->
-            <div class="card community-card">
-
-                <div class="card-title">
-                    SOMSOM COMMUNITY
-                </div>
-
-                <div class="total-number">
-                    <span id="totalSomsoms">0</span>
-                </div>
-
-                <div class="total-label">
-                    Total Somsoms Joined
-                </div>
-
-
-                <div class="country-header">
-
-                    <h2>
-                        Countries & Regions
-                    </h2>
-
-                    <select id="sortSelect">
-                        <option value="alphabetical">
-                            Alphabetical
-                        </option>
-
-                        <option value="count">
-                            Most Somsoms
-                        </option>
-                    </select>
-
-                </div>
-
-
-                <div id="countryList" class="country-list"></div>
-
-            </div>
+                <tbody id="countryTable">
+                    <tr>
+                        <td colspan="2">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
 
         </section>
-
-
-        <footer>
-            Made with love by International Somsoms
-        </footer>
 
     </main>
-
 
     <script src="script.js"></script>
 
