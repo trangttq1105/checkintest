@@ -1,15 +1,13 @@
 const CSV_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vQHyhDdtefbT2TLzH5XxOv-BuhCou8HrzMtygu2bn6YKyYmXKJirAICAj_GOqeroc4wszw-q4AA_4_m/pub?gid=1227661950&single=true&output=csv";
 
-
 let countries = [];
 
-
 async function loadStatistics() {
-
     try {
-
-        const response = await fetch(CSV_URL);
+        const response = await fetch(CSV_URL, {
+            cache: "no-store"
+        });
 
         if (!response.ok) {
             throw new Error("Unable to load statistics.");
@@ -17,11 +15,12 @@ async function loadStatistics() {
 
         const csvText = await response.text();
 
+        console.log("CSV DATA:", csvText);
+
         parseCSV(csvText);
 
     } catch (error) {
-
-        console.error(error);
+        console.error("ERROR:", error);
 
         document.getElementById("total").textContent =
             "Unable to load";
@@ -45,13 +44,15 @@ function parseCSV(csvText) {
 
     countries = [];
 
-    for (let i = 1; i < lines.length; i++) {
+    for (let i = 0; i < lines.length; i++) {
 
-        const line = lines[i];
+        const line = lines[i].trim();
 
-        if (!line.trim()) continue;
+        if (!line) continue;
 
         const parts = line.split(",");
+
+        if (parts.length < 2) continue;
 
         const country = parts[0]
             .replace(/^"|"$/g, "")
@@ -59,22 +60,25 @@ function parseCSV(csvText) {
 
         const participants = Number(
             parts[1]
-                ?.replace(/^"|"$/g, "")
+                .replace(/^"|"$/g, "")
                 .trim()
         );
 
-        if (country && !isNaN(participants)) {
-
-            countries.push({
-                country,
-                participants
-            });
-
+        // Skip headers and invalid rows
+        if (
+            country.toLowerCase() === "country" ||
+            isNaN(participants)
+        ) {
+            continue;
         }
+
+        countries.push({
+            country: country,
+            participants: participants
+        });
     }
 
     updateTotal();
-
     displayCountries();
 }
 
@@ -86,7 +90,8 @@ function updateTotal() {
         0
     );
 
-    document.getElementById("total").textContent = total;
+    document.getElementById("total").textContent =
+        total.toLocaleString();
 }
 
 
@@ -100,37 +105,45 @@ function displayCountries() {
     if (sortType === "count") {
 
         sortedCountries.sort(
-            (a, b) =>
-                b.participants - a.participants
+            (a, b) => b.participants - a.participants
         );
 
     } else {
 
         sortedCountries.sort(
             (a, b) =>
-                a.country.localeCompare(b.country)
+                a.country.localeCompare(
+                    b.country
+                )
         );
     }
-
 
     const table =
         document.getElementById("countryTable");
 
     table.innerHTML = "";
 
-
     sortedCountries.forEach(item => {
 
         const row =
             document.createElement("tr");
 
-        row.innerHTML = `
-            <td>${item.country}</td>
-            <td>${item.participants}</td>
-        `;
+        const countryCell =
+            document.createElement("td");
+
+        const participantCell =
+            document.createElement("td");
+
+        countryCell.textContent =
+            item.country;
+
+        participantCell.textContent =
+            item.participants.toLocaleString();
+
+        row.appendChild(countryCell);
+        row.appendChild(participantCell);
 
         table.appendChild(row);
-
     });
 }
 
