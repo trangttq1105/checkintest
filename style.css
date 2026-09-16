@@ -1,30 +1,32 @@
-```css
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
+    background:
+        linear-gradient(
+            135deg,
+            #fff7f0,
+            #fffaf6
+        );
 
-    background: #f7f4ef;
-    color: #333;
+    color: #4a3a32;
+
+    min-height: 100vh;
 }
 
 
 .container {
     width: 100%;
-    max-width: 760px;
+    max-width: 720px;
 
     margin: 0 auto;
-    padding: 40px 20px;
+
+    padding: 50px 20px 30px;
 }
 
 
@@ -32,193 +34,244 @@ body {
 
 .header {
     text-align: center;
+
     margin-bottom: 30px;
 }
 
 .header h1 {
-    margin: 0;
-
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 700;
+
+    margin-bottom: 8px;
 }
 
-.header p {
-    margin-top: 8px;
-
-    font-size: 14px;
-    color: #777;
+.subtitle {
+    font-size: 15px;
+    color: #8a766b;
 }
 
 
-/* CARD */
+/* REGISTRATION */
 
-.card {
-    background: white;
+.registration-card {
+    background: #ffffff;
 
-    border-radius: 18px;
+    border-radius: 20px;
 
-    padding: 28px;
-
-    margin-bottom: 22px;
+    padding: 25px;
 
     box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.05);
+        0 8px 30px rgba(100, 70, 50, 0.08);
+
+    border: 1px solid #f1e4db;
+
+    margin-bottom: 25px;
 }
 
-.card h2 {
-    margin-top: 0;
+.registration-card label {
+    display: block;
 
-    font-size: 21px;
-}
-
-.description {
-    color: #777;
     font-size: 14px;
-    line-height: 1.6;
+    font-weight: 600;
+
+    margin-bottom: 10px;
 }
 
 
-/* SELECT */
-
-select {
+#countrySelect {
     width: 100%;
 
-    padding: 14px 16px;
+    padding: 14px 15px;
 
-    margin-top: 10px;
+    border-radius: 12px;
 
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border: 1px solid #dccfc7;
 
-    background: white;
+    background: #fff;
+
+    color: #4a3a32;
 
     font-size: 15px;
+
+    outline: none;
+
+    margin-bottom: 15px;
 
     cursor: pointer;
 }
 
 
-/* BUTTON */
+#countrySelect:focus {
+    border-color: #c89570;
+}
 
-.primary-button {
+
+#confirmButton {
     width: 100%;
-
-    margin-top: 15px;
 
     padding: 14px;
 
     border: none;
-    border-radius: 10px;
 
-    background: #333;
+    border-radius: 12px;
+
+    background: #8d624d;
+
     color: white;
 
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
 
     cursor: pointer;
 
     transition: 0.2s;
 }
 
-.primary-button:hover {
-    opacity: 0.85;
+
+#confirmButton:hover {
+    background: #704b3a;
 }
 
 
-/* RESULT */
+#confirmButton:active {
+    transform: scale(0.98);
+}
 
-.result-card {
+
+/* ERROR */
+
+.error-message {
+    color: #c85b5b;
+
+    font-size: 13px;
+
+    margin-top: 10px;
+
     text-align: center;
 }
 
-.result-number {
-    margin: 20px 0;
 
-    font-size: 24px;
-    font-weight: 600;
+/* RESULTS */
+
+.results {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+    animation: fadeIn 0.4s ease;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* CARD */
+
+.card {
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    border: 1px solid #f1e4db;
+
+    box-shadow:
+        0 8px 30px rgba(100, 70, 50, 0.08);
+}
+
+
+.card-title {
+    text-align: center;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    color: #a18473;
+
+    margin-bottom: 15px;
+}
+
+
+/* PERSONAL */
+
+.personal-card {
+    text-align: center;
+}
+
+
+.personal-result {
+    font-size: 22px;
+
+    font-weight: 700;
 
     line-height: 1.5;
+
+    color: #704b3a;
 }
 
 
-/* STRATEGY */
+/* COMMUNITY */
 
-.strategy-box {
-    margin-top: 20px;
-
-    padding: 22px;
-
-    border-radius: 14px;
-
-    background: #f8f6f2;
-}
-
-.strategy-label {
-    margin: 0 0 8px;
-
-    font-size: 13px;
-    color: #777;
-}
-
-.strategy-box h3 {
-    margin: 5px 0 18px;
-
-    font-size: 22px;
-}
-
-
-.strategy-button {
-    display: inline-block;
-
-    padding: 11px 20px;
-
-    border-radius: 9px;
-
-    background: #333;
-    color: white;
-
-    text-decoration: none;
-
-    font-size: 14px;
-    font-weight: 600;
-}
-
-
-/* STATISTICS */
-
-.total-box {
+.community-card {
     text-align: center;
-
-    padding: 20px;
-
-    margin: 20px 0;
-
-    border-radius: 14px;
-
-    background: #f8f6f2;
 }
+
+
+.total-number {
+    font-size: 42px;
+
+    font-weight: 800;
+
+    color: #8d624d;
+
+    line-height: 1;
+}
+
 
 .total-label {
-    display: block;
-
     font-size: 13px;
-    color: #777;
 
-    margin-bottom: 5px;
+    color: #8a766b;
+
+    margin-top: 8px;
+
+    margin-bottom: 25px;
 }
 
-.total-box strong {
-    font-size: 36px;
-}
 
+/* COUNTRY HEADER */
 
-/* STATISTICS HEADER */
-
-.statistics-header {
+.country-header {
     display: flex;
 
     justify-content: space-between;
+
     align-items: center;
 
     gap: 15px;
@@ -226,40 +279,30 @@ select {
     margin-bottom: 15px;
 }
 
-.statistics-header h3 {
-    margin: 0;
 
+.country-header h2 {
     font-size: 16px;
+
+    text-align: left;
+
+    color: #4a3a32;
 }
 
 
-/* SORT */
-
-.sort-buttons {
-    display: flex;
-
-    gap: 6px;
-}
-
-.sort-button {
-    padding: 7px 11px;
-
-    border: 1px solid #ddd;
+#sortSelect {
+    padding: 8px 10px;
 
     border-radius: 8px;
 
-    background: white;
+    border: 1px solid #dccfc7;
+
+    background: #fff;
+
+    color: #5b493f;
 
     font-size: 12px;
 
     cursor: pointer;
-}
-
-.sort-button.active {
-    background: #333;
-    color: white;
-
-    border-color: #333;
 }
 
 
@@ -273,96 +316,87 @@ select {
     gap: 8px;
 }
 
-.country-row {
+
+.country-item {
     display: flex;
 
     justify-content: space-between;
+
     align-items: center;
 
     padding: 13px 15px;
 
+    background: #fffaf7;
+
+    border: 1px solid #f1e4db;
+
     border-radius: 10px;
 
-    background: #f8f8f8;
+    font-size: 14px;
 }
+
 
 .country-name {
-    font-size: 14px;
+    font-weight: 600;
+
+    color: #55443b;
 }
+
 
 .country-count {
-    font-size: 14px;
     font-weight: 700;
-}
 
-
-/* OTHER */
-
-.error-message {
-    color: #c0392b;
-
-    font-size: 13px;
-
-    text-align: center;
-
-    min-height: 18px;
-}
-
-.empty-message {
-    text-align: center;
-
-    color: #999;
-
-    font-size: 14px;
-
-    padding: 20px;
-}
-
-.hidden {
-    display: none;
+    color: #8d624d;
 }
 
 
 /* FOOTER */
 
-.footer {
+footer {
     text-align: center;
 
-    color: #999;
+    font-size: 11px;
 
-    font-size: 12px;
+    color: #a8988f;
 
-    padding: 10px 0 20px;
+    margin-top: 30px;
 }
 
 
 /* MOBILE */
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
 
     .container {
-        padding: 25px 15px;
+        padding: 30px 15px 25px;
     }
 
-    .card {
-        padding: 22px 18px;
-    }
 
     .header h1 {
-        font-size: 25px;
+        font-size: 27px;
     }
 
-    .statistics-header {
-        flex-direction: column;
+
+    .card,
+    .registration-card {
+        padding: 20px;
+    }
+
+
+    .personal-result {
+        font-size: 19px;
+    }
+
+
+    .country-header {
         align-items: flex-start;
+
+        flex-direction: column;
     }
 
-    .sort-buttons {
+
+    #sortSelect {
         width: 100%;
     }
 
-    .sort-button {
-        flex: 1;
-    }
 }
-```
