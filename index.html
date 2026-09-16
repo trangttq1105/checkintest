@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,47 +16,28 @@
         <!-- HEADER -->
         <header class="header">
             <h1>Somsom Registration</h1>
-            <p>Join our global support team</p>
+
+            <p class="subtitle">
+                Join Somsoms from around the world
+            </p>
         </header>
 
 
         <!-- REGISTRATION -->
-        <section class="card registration-card">
+        <section class="registration-card">
 
-            <h2>Choose Your Country / Region</h2>
-
-            <p class="description">
-                Select your country or region to join the Somsom registration.
-            </p>
+            <label for="countrySelect">
+                Choose Your Country or Region
+            </label>
 
             <select id="countrySelect">
-                <option value="">Select your country / region</option>
-
-                <option value="Australia">Australia</option>
-                <option value="Canada">Canada</option>
-                <option value="China">China</option>
-                <option value="France">France</option>
-                <option value="Germany">Germany</option>
-                <option value="Hong Kong">Hong Kong</option>
-                <option value="Indonesia">Indonesia</option>
-                <option value="Japan">Japan</option>
-                <option value="Malaysia">Malaysia</option>
-                <option value="Philippines">Philippines</option>
-                <option value="Singapore">Singapore</option>
-                <option value="South Korea">South Korea</option>
-                <option value="Sweden">Sweden</option>
-                <option value="Taiwan">Taiwan</option>
-                <option value="Thailand">Thailand</option>
-                <option value="Ukraine">Ukraine</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="United States">United States</option>
-                <option value="Vietnam">Vietnam</option>
-
-                <option value="Other">Other</option>
+                <option value="">
+                    Select your country or region
+                </option>
             </select>
 
-            <button id="confirmButton" class="primary-button">
-                Confirm
+            <button id="confirmButton">
+                CONFIRM
             </button>
 
             <p id="errorMessage" class="error-message"></p>
@@ -65,94 +45,67 @@
         </section>
 
 
-        <!-- PERSONAL RESULT -->
-        <section id="personalSection" class="card result-card hidden">
+        <!-- RESULTS -->
+        <section id="results" class="results hidden">
 
-            <h2>Your Registration</h2>
+            <!-- PERSONAL RESULT -->
+            <div class="card personal-card">
 
-            <div class="result-number">
-                <span id="personalResult"></span>
-            </div>
+                <div class="card-title">
+                    YOUR SOMSOM NUMBER
+                </div>
 
-            <div class="strategy-box">
-
-                <p class="strategy-label">
-                    Recommended Trending Strategy
-                </p>
-
-                <h3 id="strategyName">
-                    PLAN 1
-                </h3>
-
-                <a
-                    id="strategyLink"
-                    href="#"
-                    target="_blank"
-                    class="strategy-button"
-                >
-                    View Trending Strategy
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- GLOBAL STATISTICS -->
-        <section id="statisticsSection" class="card statistics-card">
-
-            <h2>Global Statistics</h2>
-
-            <div class="total-box">
-
-                <span class="total-label">
-                    Total Somsoms Joined
-                </span>
-
-                <strong id="totalCount">
-                    0
-                </strong>
-
-            </div>
-
-
-            <div class="statistics-header">
-
-                <h3>Countries / Regions</h3>
-
-                <div class="sort-buttons">
-
-                    <button
-                        id="sortAlphabetical"
-                        class="sort-button active"
-                    >
-                        A–Z
-                    </button>
-
-                    <button
-                        id="sortCount"
-                        class="sort-button"
-                    >
-                        Most Joined
-                    </button>
-
+                <div id="personalResult" class="personal-result">
+                    You are the 3rd Somsom from Vietnam.
                 </div>
 
             </div>
 
 
-            <div id="countryList" class="country-list">
-                <p class="empty-message">
-                    No registrations yet.
-                </p>
+            <!-- COMMUNITY RESULT -->
+            <div class="card community-card">
+
+                <div class="card-title">
+                    SOMSOM COMMUNITY
+                </div>
+
+                <div class="total-number">
+                    <span id="totalSomsoms">0</span>
+                </div>
+
+                <div class="total-label">
+                    Total Somsoms Joined
+                </div>
+
+
+                <div class="country-header">
+
+                    <h2>
+                        Countries & Regions
+                    </h2>
+
+                    <select id="sortSelect">
+                        <option value="alphabetical">
+                            Alphabetical
+                        </option>
+
+                        <option value="count">
+                            Most Somsoms
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <div id="countryList" class="country-list"></div>
+
             </div>
 
         </section>
 
 
-        <!-- FOOTER -->
-        <footer class="footer">
-            <p>Somsom Registration Tool</p>
+        <footer>
+            Made with love by International Somsoms
         </footer>
 
     </main>
@@ -162,4 +115,3 @@
 
 </body>
 </html>
-```
