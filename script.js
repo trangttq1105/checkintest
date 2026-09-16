@@ -1,384 +1,146 @@
-/* =====================================================
-   DEMO SOMSOM DATA
-
-   This is temporary data for testing only.
-   We will replace this with a real database later.
-===================================================== */
-
-const somsomsData = {
-
-    "Indonesia": 10,
-    "Japan": 5,
-    "Malaysia": 7,
-    "Philippines": 15,
-    "Thailand": 35,
-    "Vietnam": 2
-
-};
+const CSV_URL =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQHyhDdtefbT2TLzH5XxOv-BuhCou8HrzMtygu2bn6YKyYmXKJirAICAj_GOqeroc4wszw-q4AA_4_m/pub?gid=1227661950&single=true&output=csv";
 
 
-/* =====================================================
-   COUNTRY LIST
-===================================================== */
-
-const countries = [
-    "Afghanistan",
-    "Albania",
-    "Algeria",
-    "Argentina",
-    "Australia",
-    "Austria",
-    "Bangladesh",
-    "Belgium",
-    "Brazil",
-    "Brunei",
-    "Cambodia",
-    "Canada",
-    "Chile",
-    "China",
-    "Colombia",
-    "Croatia",
-    "Czech Republic",
-    "Denmark",
-    "Egypt",
-    "Finland",
-    "France",
-    "Germany",
-    "Greece",
-    "Hong Kong",
-    "Hungary",
-    "India",
-    "Indonesia",
-    "Ireland",
-    "Israel",
-    "Italy",
-    "Japan",
-    "Laos",
-    "Malaysia",
-    "Mexico",
-    "Myanmar",
-    "Nepal",
-    "Netherlands",
-    "New Zealand",
-    "Norway",
-    "Pakistan",
-    "Peru",
-    "Philippines",
-    "Poland",
-    "Portugal",
-    "Romania",
-    "Russia",
-    "Saudi Arabia",
-    "Singapore",
-    "South Africa",
-    "South Korea",
-    "Spain",
-    "Sweden",
-    "Switzerland",
-    "Taiwan",
-    "Thailand",
-    "Turkey",
-    "Ukraine",
-    "United Arab Emirates",
-    "United Kingdom",
-    "United States",
-    "Vietnam"
-];
+let countries = [];
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+async function loadStatistics() {
 
-const countrySelect =
-    document.getElementById("countrySelect");
+    try {
 
-const confirmButton =
-    document.getElementById("confirmButton");
+        const response = await fetch(CSV_URL);
 
-const errorMessage =
-    document.getElementById("errorMessage");
+        if (!response.ok) {
+            throw new Error("Unable to load statistics.");
+        }
 
-const results =
-    document.getElementById("results");
+        const csvText = await response.text();
 
-const personalResult =
-    document.getElementById("personalResult");
+        parseCSV(csvText);
 
-const totalSomsoms =
-    document.getElementById("totalSomsoms");
+    } catch (error) {
 
-const countryList =
-    document.getElementById("countryList");
+        console.error(error);
 
-const sortSelect =
-    document.getElementById("sortSelect");
+        document.getElementById("total").textContent =
+            "Unable to load";
 
-
-/* =====================================================
-   LOAD COUNTRY DROPDOWN
-===================================================== */
-
-countries.forEach(country => {
-
-    const option =
-        document.createElement("option");
-
-    option.value = country;
-
-    option.textContent = country;
-
-    countrySelect.appendChild(option);
-
-});
-
-
-/* =====================================================
-   GET TOTAL SOMSOMS
-===================================================== */
-
-function getTotalSomsoms() {
-
-    return Object.values(somsomsData)
-        .reduce(
-            (total, count) => total + count,
-            0
-        );
-
+        document.getElementById("countryTable").innerHTML = `
+            <tr>
+                <td colspan="2">
+                    Unable to load statistics.
+                </td>
+            </tr>
+        `;
+    }
 }
 
 
-/* =====================================================
-   ORDINAL NUMBER
+function parseCSV(csvText) {
 
-   1st
-   2nd
-   3rd
-   4th
-   21st
-   22nd
-   23rd
-===================================================== */
+    const lines = csvText
+        .trim()
+        .split(/\r?\n/);
 
-function getOrdinal(number) {
+    countries = [];
 
-    const lastTwo =
-        number % 100;
+    for (let i = 1; i < lines.length; i++) {
 
-    if (
-        lastTwo >= 11 &&
-        lastTwo <= 13
-    ) {
-        return number + "th";
+        const line = lines[i];
+
+        if (!line.trim()) continue;
+
+        const parts = line.split(",");
+
+        const country = parts[0]
+            .replace(/^"|"$/g, "")
+            .trim();
+
+        const participants = Number(
+            parts[1]
+                ?.replace(/^"|"$/g, "")
+                .trim()
+        );
+
+        if (country && !isNaN(participants)) {
+
+            countries.push({
+                country,
+                participants
+            });
+
+        }
     }
 
+    updateTotal();
 
-    switch (number % 10) {
-
-        case 1:
-            return number + "st";
-
-        case 2:
-            return number + "nd";
-
-        case 3:
-            return number + "rd";
-
-        default:
-            return number + "th";
-
-    }
-
+    displayCountries();
 }
 
 
-/* =====================================================
-   RENDER COUNTRY LIST
-===================================================== */
+function updateTotal() {
 
-function renderCountryList(sortType) {
+    const total = countries.reduce(
+        (sum, item) => sum + item.participants,
+        0
+    );
 
-    let entries =
-        Object.entries(somsomsData);
-
-
-    /* Alphabetical */
-
-    if (sortType === "alphabetical") {
-
-        entries.sort(
-            (a, b) =>
-                a[0].localeCompare(b[0])
-        );
-
-    }
+    document.getElementById("total").textContent = total;
+}
 
 
-    /* Most Somsoms */
+function displayCountries() {
+
+    const sortType =
+        document.getElementById("sortSelect").value;
+
+    let sortedCountries = [...countries];
 
     if (sortType === "count") {
 
-        entries.sort(
-            (a, b) => b[1] - a[1]
+        sortedCountries.sort(
+            (a, b) =>
+                b.participants - a.participants
         );
 
+    } else {
+
+        sortedCountries.sort(
+            (a, b) =>
+                a.country.localeCompare(b.country)
+        );
     }
 
 
-    countryList.innerHTML = "";
+    const table =
+        document.getElementById("countryTable");
+
+    table.innerHTML = "";
 
 
-    entries.forEach(
-        ([country, count]) => {
+    sortedCountries.forEach(item => {
 
-            const item =
-                document.createElement("div");
+        const row =
+            document.createElement("tr");
 
-            item.className =
-                "country-item";
+        row.innerHTML = `
+            <td>${item.country}</td>
+            <td>${item.participants}</td>
+        `;
 
+        table.appendChild(row);
 
-            const countryName =
-                document.createElement("span");
-
-            countryName.className =
-                "country-name";
-
-            countryName.textContent =
-                country;
-
-
-            const countryCount =
-                document.createElement("span");
-
-            countryCount.className =
-                "country-count";
-
-            countryCount.textContent =
-                count;
-
-
-            item.appendChild(countryName);
-
-            item.appendChild(countryCount);
-
-            countryList.appendChild(item);
-
-        }
-    );
-
+    });
 }
 
 
-/* =====================================================
-   CONFIRM
-===================================================== */
-
-confirmButton.addEventListener(
-    "click",
-    () => {
-
-        const selectedCountry =
-            countrySelect.value;
+document
+    .getElementById("sortSelect")
+    .addEventListener(
+        "change",
+        displayCountries
+    );
 
 
-        /* No country */
-
-        if (!selectedCountry) {
-
-            errorMessage.textContent =
-                "Please select your country or region.";
-
-            results.classList.add("hidden");
-
-            return;
-
-        }
-
-
-        errorMessage.textContent = "";
-
-
-        /*
-            DEMO LOGIC
-
-            If the country already exists:
-            current count + 1
-
-            If it doesn't exist:
-            user is the 1st Somsom.
-        */
-
-        const currentCount =
-            somsomsData[selectedCountry] || 0;
-
-
-        const userNumber =
-            currentCount + 1;
-
-
-        /* Personal result */
-
-        personalResult.textContent =
-            `You are the ${getOrdinal(userNumber)} Somsom from ${selectedCountry}.`;
-
-
-        /*
-            Demo only:
-            We temporarily add the user
-            to the displayed statistics.
-        */
-
-        somsomsData[selectedCountry] =
-            userNumber;
-
-
-        /* Total */
-
-        totalSomsoms.textContent =
-            getTotalSomsoms();
-
-
-        /* Country list */
-
-        renderCountryList(
-            sortSelect.value
-        );
-
-
-        /* Show results */
-
-        results.classList.remove(
-            "hidden"
-        );
-
-
-        /* Scroll */
-
-        setTimeout(() => {
-
-            results.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
-        }, 100);
-
-    }
-);
-
-
-/* =====================================================
-   SORT
-===================================================== */
-
-sortSelect.addEventListener(
-    "change",
-    () => {
-
-        renderCountryList(
-            sortSelect.value
-        );
-
-    }
-);
+loadStatistics();
