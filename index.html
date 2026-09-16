@@ -1,0 +1,165 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Somsom Registration</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <!-- HEADER -->
+        <header class="header">
+            <h1>Somsom Registration</h1>
+            <p>Join our global support team</p>
+        </header>
+
+
+        <!-- REGISTRATION -->
+        <section class="card registration-card">
+
+            <h2>Choose Your Country / Region</h2>
+
+            <p class="description">
+                Select your country or region to join the Somsom registration.
+            </p>
+
+            <select id="countrySelect">
+                <option value="">Select your country / region</option>
+
+                <option value="Australia">Australia</option>
+                <option value="Canada">Canada</option>
+                <option value="China">China</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Hong Kong">Hong Kong</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="Japan">Japan</option>
+                <option value="Malaysia">Malaysia</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Singapore">Singapore</option>
+                <option value="South Korea">South Korea</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Taiwan">Taiwan</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
+                <option value="Vietnam">Vietnam</option>
+
+                <option value="Other">Other</option>
+            </select>
+
+            <button id="confirmButton" class="primary-button">
+                Confirm
+            </button>
+
+            <p id="errorMessage" class="error-message"></p>
+
+        </section>
+
+
+        <!-- PERSONAL RESULT -->
+        <section id="personalSection" class="card result-card hidden">
+
+            <h2>Your Registration</h2>
+
+            <div class="result-number">
+                <span id="personalResult"></span>
+            </div>
+
+            <div class="strategy-box">
+
+                <p class="strategy-label">
+                    Recommended Trending Strategy
+                </p>
+
+                <h3 id="strategyName">
+                    PLAN 1
+                </h3>
+
+                <a
+                    id="strategyLink"
+                    href="#"
+                    target="_blank"
+                    class="strategy-button"
+                >
+                    View Trending Strategy
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- GLOBAL STATISTICS -->
+        <section id="statisticsSection" class="card statistics-card">
+
+            <h2>Global Statistics</h2>
+
+            <div class="total-box">
+
+                <span class="total-label">
+                    Total Somsoms Joined
+                </span>
+
+                <strong id="totalCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="statistics-header">
+
+                <h3>Countries / Regions</h3>
+
+                <div class="sort-buttons">
+
+                    <button
+                        id="sortAlphabetical"
+                        class="sort-button active"
+                    >
+                        A–Z
+                    </button>
+
+                    <button
+                        id="sortCount"
+                        class="sort-button"
+                    >
+                        Most Joined
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div id="countryList" class="country-list">
+                <p class="empty-message">
+                    No registrations yet.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>Somsom Registration Tool</p>
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+```
