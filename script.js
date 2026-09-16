@@ -1,110 +1,94 @@
-```javascript
-/* =========================================
-   SOMSOM REGISTRATION TOOL
-   Prototype
-   ========================================= */
+/* =====================================================
+   DEMO SOMSOM DATA
 
+   This is temporary data for testing only.
+   We will replace this with a real database later.
+===================================================== */
 
-/* COUNTRY → TRENDING STRATEGY */
+const somsomsData = {
 
-const countryStrategies = {
-
-    "Australia": {
-        name: "PLAN 1",
-        link: "#"
-    },
-
-    "Canada": {
-        name: "PLAN 1",
-        link: "#"
-    },
-
-    "China": {
-        name: "PLAN 2",
-        link: "#"
-    },
-
-    "France": {
-        name: "PLAN 3",
-        link: "#"
-    },
-
-    "Germany": {
-        name: "PLAN 3",
-        link: "#"
-    },
-
-    "Hong Kong": {
-        name: "PLAN 2",
-        link: "#"
-    },
-
-    "Indonesia": {
-        name: "PLAN 1",
-        link: "#"
-    },
-
-    "Japan": {
-        name: "PLAN 2",
-        link: "#"
-    },
-
-    "Malaysia": {
-        name: "PLAN 1",
-        link: "#"
-    },
-
-    "Philippines": {
-        name: "PLAN 1",
-        link: "#"
-    },
-
-    "Singapore": {
-        name: "PLAN 1",
-        link: "#"
-    },
-
-    "South Korea": {
-        name: "PLAN 2",
-        link: "#"
-    },
-
-    "Taiwan": {
-        name: "PLAN 2",
-        link: "#"
-    },
-
-    "Thailand": {
-        name: "PLAN 2",
-        link: "#"
-    },
-
-    "United Kingdom": {
-        name: "PLAN 3",
-        link: "#"
-    },
-
-    "United States": {
-        name: "PLAN 3",
-        link: "#"
-    },
-
-    "Vietnam": {
-        name: "PLAN 1",
-        link: "#"
-    },
-
-    "Other": {
-        name: "PLAN 1",
-        link: "#"
-    }
+    "Indonesia": 10,
+    "Japan": 5,
+    "Malaysia": 7,
+    "Philippines": 15,
+    "Thailand": 35,
+    "Vietnam": 2
 
 };
 
 
-/* =========================================
-   GET ELEMENTS
-   ========================================= */
+/* =====================================================
+   COUNTRY LIST
+===================================================== */
+
+const countries = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Argentina",
+    "Australia",
+    "Austria",
+    "Bangladesh",
+    "Belgium",
+    "Brazil",
+    "Brunei",
+    "Cambodia",
+    "Canada",
+    "Chile",
+    "China",
+    "Colombia",
+    "Croatia",
+    "Czech Republic",
+    "Denmark",
+    "Egypt",
+    "Finland",
+    "France",
+    "Germany",
+    "Greece",
+    "Hong Kong",
+    "Hungary",
+    "India",
+    "Indonesia",
+    "Ireland",
+    "Israel",
+    "Italy",
+    "Japan",
+    "Laos",
+    "Malaysia",
+    "Mexico",
+    "Myanmar",
+    "Nepal",
+    "Netherlands",
+    "New Zealand",
+    "Norway",
+    "Pakistan",
+    "Peru",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Romania",
+    "Russia",
+    "Saudi Arabia",
+    "Singapore",
+    "South Africa",
+    "South Korea",
+    "Spain",
+    "Sweden",
+    "Switzerland",
+    "Taiwan",
+    "Thailand",
+    "Turkey",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Kingdom",
+    "United States",
+    "Vietnam"
+];
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
 const countrySelect =
     document.getElementById("countrySelect");
@@ -115,195 +99,170 @@ const confirmButton =
 const errorMessage =
     document.getElementById("errorMessage");
 
-const personalSection =
-    document.getElementById("personalSection");
+const results =
+    document.getElementById("results");
 
 const personalResult =
     document.getElementById("personalResult");
 
-const strategyName =
-    document.getElementById("strategyName");
-
-const strategyLink =
-    document.getElementById("strategyLink");
-
-const totalCount =
-    document.getElementById("totalCount");
+const totalSomsoms =
+    document.getElementById("totalSomsoms");
 
 const countryList =
     document.getElementById("countryList");
 
-const sortAlphabetical =
-    document.getElementById("sortAlphabetical");
-
-const sortCount =
-    document.getElementById("sortCount");
+const sortSelect =
+    document.getElementById("sortSelect");
 
 
-/* =========================================
-   CHECK JAVASCRIPT
-   ========================================= */
+/* =====================================================
+   LOAD COUNTRY DROPDOWN
+===================================================== */
 
-console.log("Somsom Registration script loaded successfully.");
+countries.forEach(country => {
 
+    const option =
+        document.createElement("option");
 
-/* =========================================
-   LOAD DATA
-   ========================================= */
+    option.value = country;
 
-let registrations = {};
+    option.textContent = country;
 
-try {
+    countrySelect.appendChild(option);
 
-    registrations =
-        JSON.parse(
-            localStorage.getItem(
-                "somsomRegistrations"
-            )
-        ) || {};
-
-} catch (error) {
-
-    console.error(
-        "Could not load registration data:",
-        error
-    );
-
-    registrations = {};
-}
+});
 
 
-/* =========================================
-   SAVE DATA
-   ========================================= */
+/* =====================================================
+   GET TOTAL SOMSOMS
+===================================================== */
 
-function saveData() {
+function getTotalSomsoms() {
 
-    localStorage.setItem(
-        "somsomRegistrations",
-        JSON.stringify(registrations)
-    );
+    return Object.values(somsomsData)
+        .reduce(
+            (total, count) => total + count,
+            0
+        );
 
 }
 
 
-/* =========================================
-   TOTAL REGISTRATIONS
-   ========================================= */
+/* =====================================================
+   ORDINAL NUMBER
 
-function getTotalRegistrations() {
+   1st
+   2nd
+   3rd
+   4th
+   21st
+   22nd
+   23rd
+===================================================== */
 
-    let total = 0;
+function getOrdinal(number) {
 
-    Object.values(registrations).forEach(
-        function(count) {
+    const lastTwo =
+        number % 100;
 
-            total += Number(count);
+    if (
+        lastTwo >= 11 &&
+        lastTwo <= 13
+    ) {
+        return number + "th";
+    }
 
-        }
-    );
 
-    return total;
+    switch (number % 10) {
+
+        case 1:
+            return number + "st";
+
+        case 2:
+            return number + "nd";
+
+        case 3:
+            return number + "rd";
+
+        default:
+            return number + "th";
+
+    }
 
 }
 
 
-/* =========================================
-   UPDATE TOTAL
-   ========================================= */
+/* =====================================================
+   RENDER COUNTRY LIST
+===================================================== */
 
-function updateTotal() {
+function renderCountryList(sortType) {
 
-    totalCount.textContent =
-        getTotalRegistrations();
-
-}
+    let entries =
+        Object.entries(somsomsData);
 
 
-/* =========================================
-   DISPLAY COUNTRY LIST
-   ========================================= */
+    /* Alphabetical */
 
-let currentSort = "alphabetical";
+    if (sortType === "alphabetical") {
+
+        entries.sort(
+            (a, b) =>
+                a[0].localeCompare(b[0])
+        );
+
+    }
 
 
-function renderCountries() {
+    /* Most Somsoms */
+
+    if (sortType === "count") {
+
+        entries.sort(
+            (a, b) => b[1] - a[1]
+        );
+
+    }
+
 
     countryList.innerHTML = "";
 
 
-    let countries =
-        Object.entries(registrations);
+    entries.forEach(
+        ([country, count]) => {
 
-
-    if (countries.length === 0) {
-
-        countryList.innerHTML = `
-            <p class="empty-message">
-                No registrations yet.
-            </p>
-        `;
-
-        return;
-    }
-
-
-    /* A-Z */
-
-    if (currentSort === "alphabetical") {
-
-        countries.sort(
-            function(a, b) {
-
-                return a[0].localeCompare(b[0]);
-
-            }
-        );
-
-    }
-
-
-    /* MOST JOINED */
-
-    else {
-
-        countries.sort(
-            function(a, b) {
-
-                return b[1] - a[1];
-
-            }
-        );
-
-    }
-
-
-    countries.forEach(
-        function(item) {
-
-            const country = item[0];
-            const count = item[1];
-
-
-            const row =
+            const item =
                 document.createElement("div");
 
-            row.className =
-                "country-row";
+            item.className =
+                "country-item";
 
 
-            row.innerHTML = `
-                <span class="country-name">
-                    ${country}
-                </span>
+            const countryName =
+                document.createElement("span");
 
-                <span class="country-count">
-                    ${count}
-                </span>
-            `;
+            countryName.className =
+                "country-name";
+
+            countryName.textContent =
+                country;
 
 
-            countryList.appendChild(row);
+            const countryCount =
+                document.createElement("span");
+
+            countryCount.className =
+                "country-count";
+
+            countryCount.textContent =
+                count;
+
+
+            item.appendChild(countryName);
+
+            item.appendChild(countryCount);
+
+            countryList.appendChild(item);
 
         }
     );
@@ -311,33 +270,26 @@ function renderCountries() {
 }
 
 
-/* =========================================
-   CONFIRM BUTTON
-   ========================================= */
+/* =====================================================
+   CONFIRM
+===================================================== */
 
 confirmButton.addEventListener(
     "click",
-    function() {
+    () => {
 
-        console.log("Confirm button clicked.");
-
-
-        const country =
+        const selectedCountry =
             countrySelect.value;
 
 
-        console.log(
-            "Selected country:",
-            country
-        );
+        /* No country */
 
-
-        /* CHECK COUNTRY */
-
-        if (!country) {
+        if (!selectedCountry) {
 
             errorMessage.textContent =
                 "Please select your country or region.";
+
+            results.classList.add("hidden");
 
             return;
 
@@ -347,146 +299,86 @@ confirmButton.addEventListener(
         errorMessage.textContent = "";
 
 
-        /* CREATE COUNTRY */
+        /*
+            DEMO LOGIC
 
-        if (
-            !Object.prototype.hasOwnProperty.call(
-                registrations,
-                country
-            )
-        ) {
+            If the country already exists:
+            current count + 1
 
-            registrations[country] = 0;
+            If it doesn't exist:
+            user is the 1st Somsom.
+        */
 
-        }
-
-
-        /* ADD REGISTRATION */
-
-        registrations[country] =
-            Number(registrations[country]) + 1;
+        const currentCount =
+            somsomsData[selectedCountry] || 0;
 
 
-        /* PERSONAL NUMBER */
-
-        const personalNumber =
-            registrations[country];
+        const userNumber =
+            currentCount + 1;
 
 
-        console.log(
-            "Registration number:",
-            personalNumber
+        /* Personal result */
+
+        personalResult.textContent =
+            `You are the ${getOrdinal(userNumber)} Somsom from ${selectedCountry}.`;
+
+
+        /*
+            Demo only:
+            We temporarily add the user
+            to the displayed statistics.
+        */
+
+        somsomsData[selectedCountry] =
+            userNumber;
+
+
+        /* Total */
+
+        totalSomsoms.textContent =
+            getTotalSomsoms();
+
+
+        /* Country list */
+
+        renderCountryList(
+            sortSelect.value
         );
 
 
-        /* SAVE */
+        /* Show results */
 
-        saveData();
-
-
-        /* GET STRATEGY */
-
-        const strategy =
-            countryStrategies[country] ||
-            countryStrategies["Other"];
-
-
-        /* SHOW PERSONAL RESULT */
-
-        personalResult.textContent =
-            `You are Somsom #${personalNumber} from ${country}.`;
-
-
-        strategyName.textContent =
-            strategy.name;
-
-
-        strategyLink.href =
-            strategy.link;
-
-
-        /* SHOW RESULT CARD */
-
-        personalSection.classList.remove(
+        results.classList.remove(
             "hidden"
         );
 
 
-        /* UPDATE STATISTICS */
+        /* Scroll */
 
-        updateTotal();
+        setTimeout(() => {
 
-        renderCountries();
+            results.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
-
-        /* SCROLL */
-
-        personalSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
+        }, 100);
 
     }
 );
 
 
-/* =========================================
-   SORT A-Z
-   ========================================= */
+/* =====================================================
+   SORT
+===================================================== */
 
-sortAlphabetical.addEventListener(
-    "click",
-    function() {
+sortSelect.addEventListener(
+    "change",
+    () => {
 
-        currentSort = "alphabetical";
-
-
-        sortAlphabetical.classList.add(
-            "active"
+        renderCountryList(
+            sortSelect.value
         );
-
-        sortCount.classList.remove(
-            "active"
-        );
-
-
-        renderCountries();
 
     }
 );
-
-
-/* =========================================
-   SORT MOST JOINED
-   ========================================= */
-
-sortCount.addEventListener(
-    "click",
-    function() {
-
-        currentSort = "count";
-
-
-        sortCount.classList.add(
-            "active"
-        );
-
-        sortAlphabetical.classList.remove(
-            "active"
-        );
-
-
-        renderCountries();
-
-    }
-);
-
-
-/* =========================================
-   INITIALIZE
-   ========================================= */
-
-updateTotal();
-
-renderCountries();
-```
