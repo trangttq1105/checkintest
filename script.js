@@ -331,6 +331,13 @@ function displayCountries() {
 
     }
 
+    const countryCount =
+    document.getElementById(
+        "countryCount"
+    );
+
+countryCount.textContent =
+    `Somsoms have checked in from ${countries.length} countries/locations on the Somsoms Map.`;
 
     const table =
         document.getElementById(
