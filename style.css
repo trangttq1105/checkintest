@@ -203,9 +203,14 @@ td:first-child {
     text-align: left;
 }
 
+th:nth-child(2),
+td:nth-child(2) {
+    text-align: center;
+}
+
 th:last-child,
 td:last-child {
-    text-align: center;
+    text-align: right;
 }
 
 tbody tr:last-child td {
