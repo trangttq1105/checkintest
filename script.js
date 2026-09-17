@@ -5,7 +5,7 @@ let countries = [];
 
 let currentPage = 1;
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 15;
 
 
 /* =========================
