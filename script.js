@@ -3,6 +3,12 @@ const CSV_URL =
 
 let countries = [];
 
+const FC_LINKS = {
+
+    "Vietnam": "https://x.com/picuafirstkhao",
+
+};
+
 
 /* =========================
    LOAD CSV
@@ -39,7 +45,7 @@ async function loadStatistics() {
 
         document.getElementById("countryTable").innerHTML = `
             <tr>
-                <td colspan="2">
+                <td colspan="3">
                     Unable to load statistics.
                 </td>
             </tr>
@@ -379,6 +385,8 @@ function displayCountries() {
             const participantCell =
                 document.createElement("td");
 
+            const fcCell =
+                document.createElement("td");
 
             countryCell.textContent =
                 item.country;
@@ -387,7 +395,29 @@ function displayCountries() {
             participantCell.textContent =
                 item.participants.toLocaleString();
 
+            if (FC_LINKS[item.country]) {
 
+    const fcButton =
+        document.createElement("a");
+
+    fcButton.href =
+        FC_LINKS[item.country];
+
+    fcButton.textContent =
+        "Visit FC";
+
+    fcButton.target = "_blank";
+
+    fcButton.rel =
+        "noopener noreferrer";
+
+    fcButton.className =
+        "fc-button";
+
+    fcCell.appendChild(fcButton);
+
+}
+            
             row.appendChild(
                 countryCell
             );
@@ -397,7 +427,8 @@ function displayCountries() {
                 participantCell
             );
 
-
+            row.appendChild(fcCell);
+            
             table.appendChild(row);
 
         }
