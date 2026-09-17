@@ -266,4 +266,103 @@ tbody tr:last-child td {
         padding: 12px 10px;
     }
 }
+
+/* =========================
+   TABLE CONTROLS
+========================= */
+
+.table-controls {
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+
+#searchInput {
+    width: 230px;
+
+    padding: 9px 13px;
+
+    border-radius: 9px;
+
+    border: 1px solid #d8d8d8;
+
+    background: #ffffff;
+
+    color: #444;
+
+    font-size: 13px;
+}
+
+
+#searchInput::placeholder {
+    color: #aaa;
+}
+
+
+#searchInput:focus {
+    outline: none;
+
+    border-color: #aaa;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 22px;
+}
+
+
+.pagination button {
+    min-width: 34px;
+
+    height: 34px;
+
+    padding: 0 9px;
+
+    border-radius: 8px;
+
+    border: 1px solid #dddddd;
+
+    background: #ffffff;
+
+    color: #555;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+.pagination button:hover {
+    background: #f5f5f5;
+}
+
+
+.pagination button.active {
+    font-weight: 600;
+}
+
+
+.pagination button:disabled {
+    opacity: 0.4;
+
+    cursor: default;
+}
 ```
