@@ -130,6 +130,13 @@ body {
     color: #999;
 }
 
+.country-count {
+    margin: 5px 0 0;
+
+    font-size: 13px;
+
+    color: #888;
+}
 
 /* =========================
    SORT SELECT
