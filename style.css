@@ -205,11 +205,11 @@ td:first-child {
 
 th:nth-child(2),
 td:nth-child(2) {
-    text-align: center;
+    text-align: center !important;
 }
 
-th:last-child,
-td:last-child {
+th:nth-child(3),
+td:nth-child(3) {
     text-align: right;
 }
 
