@@ -6,6 +6,20 @@ let countries = [];
 const FC_LINKS = {
 
     "Vietnam": "https://x.com/picuafirstkhao",
+    "United States": "https://x.com/FirstKhaotungUS",
+    "Mexico": "https://x.com/Firstkhao_cdmx",
+    "Portugal": "https://x.com/portugalwithfk",
+    "Spain": "https://x.com/firtungg_spain",
+    "Colombia": "https://x.com/somscolombia",
+    "Indonesia": "https://x.com/firstkhaotungid",
+    "Taiwan": "https://x.com/tw1998931013",
+    "China": "https://x.com/Firstkt_CNFC",
+    "France": "https://x.com/FirstKhaotungFR",
+    "Philippines": "https://x.com/FirstKhaotungPH",
+    "India": "https://x.com/FirstKhaoIndia",
+    "Brazil": "https://x.com/firstkhaotungbr",
+    "Japan": "https://x.com/fkt_jpnfandom",
+    "Japan": "https://x.com/fkt_jpnfandom",
 
 };
 
