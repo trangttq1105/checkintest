@@ -381,12 +381,17 @@ function displayCountries() {
             const countryCell =
                 document.createElement("td");
 
-
+                countryCell.style.textAlign = "left";
+            
             const participantCell =
                 document.createElement("td");
 
+                participantCell.style.textAlign = "center";
+
             const fcCell =
                 document.createElement("td");
+
+                fcCell.style.textAlign = "right";
 
             countryCell.textContent =
                 item.country;
