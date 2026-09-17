@@ -3,25 +3,6 @@ const CSV_URL =
 
 let countries = [];
 
-const FC_LINKS = {
-
-    "Vietnam": "https://x.com/picuafirstkhao",
-    "United States": "https://x.com/FirstKhaotungUS",
-    "Mexico": "https://x.com/Firstkhao_cdmx",
-    "Portugal": "https://x.com/portugalwithfk",
-    "Spain": "https://x.com/firtungg_spain",
-    "Colombia": "https://x.com/somscolombia",
-    "Indonesia": "https://x.com/firstkhaotungid",
-    "Taiwan": "https://x.com/tw1998931013",
-    "China": "https://x.com/Firstkt_CNFC",
-    "France": "https://x.com/FirstKhaotungFR",
-    "Philippines": "https://x.com/FirstKhaotungPH",
-    "India": "https://x.com/FirstKhaoIndia",
-    "Brazil": "https://x.com/firstkhaotungbr",
-    "Japan": "https://x.com/fkt_jpnfandom",
-
-};
-
 
 /* =========================
    LOAD CSV
@@ -58,7 +39,7 @@ async function loadStatistics() {
 
         document.getElementById("countryTable").innerHTML = `
             <tr>
-                <td colspan="3">
+                <td colspan="2">
                     Unable to load statistics.
                 </td>
             </tr>
@@ -394,17 +375,10 @@ function displayCountries() {
             const countryCell =
                 document.createElement("td");
 
-                countryCell.style.textAlign = "left";
-            
+
             const participantCell =
                 document.createElement("td");
 
-                participantCell.style.textAlign = "center";
-
-            const fcCell =
-                document.createElement("td");
-
-                fcCell.style.textAlign = "right";
 
             countryCell.textContent =
                 item.country;
@@ -413,29 +387,7 @@ function displayCountries() {
             participantCell.textContent =
                 item.participants.toLocaleString();
 
-            if (FC_LINKS[item.country]) {
 
-    const fcButton =
-        document.createElement("a");
-
-    fcButton.href =
-        FC_LINKS[item.country];
-
-    fcButton.textContent =
-        "Visit FC";
-
-    fcButton.target = "_blank";
-
-    fcButton.rel =
-        "noopener noreferrer";
-
-    fcButton.className =
-        "fc-button";
-
-    fcCell.appendChild(fcButton);
-
-}
-            
             row.appendChild(
                 countryCell
             );
@@ -445,8 +397,7 @@ function displayCountries() {
                 participantCell
             );
 
-            row.appendChild(fcCell);
-            
+
             table.appendChild(row);
 
         }
