@@ -203,13 +203,8 @@ td:first-child {
     text-align: left;
 }
 
-th:nth-child(2),
-td:nth-child(2) {
-    text-align: center !important;
-}
-
-th:nth-child(3),
-td:nth-child(3) {
+th:last-child,
+td:last-child {
     text-align: right;
 }
 
@@ -263,29 +258,5 @@ tbody tr:last-child td {
     td {
         padding: 12px 10px;
     }
-}
-
-.fc-button {
-    display: inline-block;
-
-    padding: 6px 10px;
-
-    border-radius: 7px;
-
-    background: #f3f3f3;
-
-    color: #555;
-
-    text-decoration: none;
-
-    font-size: 12px;
-
-    white-space: nowrap;
-
-    transition: 0.2s ease;
-}
-
-.fc-button:hover {
-    background: #e8e8e8;
 }
 ```
