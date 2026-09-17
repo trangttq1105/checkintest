@@ -19,7 +19,6 @@ const FC_LINKS = {
     "India": "https://x.com/FirstKhaoIndia",
     "Brazil": "https://x.com/firstkhaotungbr",
     "Japan": "https://x.com/fkt_jpnfandom",
-    "Japan": "https://x.com/fkt_jpnfandom",
 
 };
 
