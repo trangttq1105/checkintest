@@ -3,6 +3,10 @@ const CSV_URL =
 
 let countries = [];
 
+let currentPage = 1;
+
+const ITEMS_PER_PAGE = 20;
+
 
 /* =========================
    LOAD CSV
@@ -297,32 +301,45 @@ function displayCountries() {
         ).value;
 
 
-    let sortedCountries =
-        [...countries];
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const searchTerm =
+        searchInput.value
+            .trim()
+            .toLowerCase();
 
 
     /* =========================
-       SORT BY PARTICIPANTS
+       FILTER
+    ========================= */
+
+    let filteredCountries =
+        countries.filter(item =>
+            item.country
+                .toLowerCase()
+                .includes(searchTerm)
+        );
+
+
+    /* =========================
+       SORT
     ========================= */
 
     if (sortType === "count") {
 
-        sortedCountries.sort(
+        filteredCountries.sort(
             (a, b) =>
                 b.participants -
                 a.participants
         );
 
-    }
+    } else {
 
-
-    /* =========================
-       SORT A-Z
-    ========================= */
-
-    else {
-
-        sortedCountries.sort(
+        filteredCountries.sort(
             (a, b) =>
                 a.country.localeCompare(
                     b.country
@@ -331,13 +348,74 @@ function displayCountries() {
 
     }
 
-    const countryCount =
-    document.getElementById(
-        "countryCount"
-    );
 
-countryCount.textContent =
-    `Somsoms have checked in from ${countries.length} countries/locations on the Somsoms Map.`;
+    /* =========================
+       COUNTRY COUNT
+    ========================= */
+
+    const countryCount =
+        document.getElementById(
+            "countryCount"
+        );
+
+
+    countryCount.textContent =
+        `Somsoms have checked in from ${countries.length} countries/locations on the Somsoms Map.`;
+
+
+    /* =========================
+       PAGINATION
+    ========================= */
+
+    const totalPages =
+        Math.ceil(
+            filteredCountries.length /
+            ITEMS_PER_PAGE
+        );
+
+
+    /*
+     * Make sure current page
+     * is always valid.
+     */
+
+    if (
+        currentPage > totalPages &&
+        totalPages > 0
+    ) {
+
+        currentPage = totalPages;
+
+    }
+
+
+    if (totalPages === 0) {
+
+        currentPage = 1;
+
+    }
+
+
+    const startIndex =
+        (currentPage - 1) *
+        ITEMS_PER_PAGE;
+
+
+    const endIndex =
+        startIndex +
+        ITEMS_PER_PAGE;
+
+
+    const pageCountries =
+        filteredCountries.slice(
+            startIndex,
+            endIndex
+        );
+
+
+    /* =========================
+       TABLE
+    ========================= */
 
     const table =
         document.getElementById(
@@ -349,20 +427,22 @@ countryCount.textContent =
 
 
     /* =========================
-       NO DATA
+       NO SEARCH RESULTS
     ========================= */
 
     if (
-        sortedCountries.length === 0
+        filteredCountries.length === 0
     ) {
 
         table.innerHTML = `
             <tr>
                 <td colspan="2">
-                    No registrations yet.
+                    No registered Somsoms found for this country/location.
                 </td>
             </tr>
         `;
+
+        renderPagination(0);
 
         return;
     }
@@ -372,7 +452,7 @@ countryCount.textContent =
        CREATE ROWS
     ========================= */
 
-    sortedCountries.forEach(
+    pageCountries.forEach(
         item => {
 
             const row =
@@ -410,6 +490,179 @@ countryCount.textContent =
         }
     );
 
+
+    /* =========================
+       PAGINATION
+    ========================= */
+
+    renderPagination(totalPages);
+
+}
+
+function renderPagination(totalPages) {
+
+    let pagination =
+        document.getElementById(
+            "pagination"
+        );
+
+
+    /*
+     * Create pagination container
+     * if it does not exist yet.
+     */
+
+    if (!pagination) {
+
+        pagination =
+            document.createElement("div");
+
+        pagination.id =
+            "pagination";
+
+        pagination.className =
+            "pagination";
+
+
+        const countriesBox =
+            document.querySelector(
+                ".countries-box"
+            );
+
+
+        countriesBox.appendChild(
+            pagination
+        );
+
+    }
+
+
+    pagination.innerHTML = "";
+
+
+    if (totalPages <= 1) {
+        return;
+    }
+
+
+    /* =========================
+       PREVIOUS
+    ========================= */
+
+    const previousButton =
+        document.createElement("button");
+
+    previousButton.textContent = "‹";
+
+    previousButton.disabled =
+        currentPage === 1;
+
+
+    previousButton.addEventListener(
+        "click",
+        () => {
+
+            if (currentPage > 1) {
+
+                currentPage--;
+
+                displayCountries();
+
+            }
+
+        }
+    );
+
+
+    pagination.appendChild(
+        previousButton
+    );
+
+
+    /* =========================
+       PAGE NUMBERS
+    ========================= */
+
+    for (
+        let page = 1;
+        page <= totalPages;
+        page++
+    ) {
+
+        const pageButton =
+            document.createElement("button");
+
+
+        pageButton.textContent =
+            page;
+
+
+        if (
+            page === currentPage
+        ) {
+
+            pageButton.classList.add(
+                "active"
+            );
+
+        }
+
+
+        pageButton.addEventListener(
+            "click",
+            () => {
+
+                currentPage = page;
+
+                displayCountries();
+
+            }
+        );
+
+
+        pagination.appendChild(
+            pageButton
+        );
+
+    }
+
+
+    /* =========================
+       NEXT
+    ========================= */
+
+    const nextButton =
+        document.createElement("button");
+
+    nextButton.textContent = "›";
+
+    nextButton.disabled =
+        currentPage === totalPages;
+
+
+    nextButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                currentPage <
+                totalPages
+            ) {
+
+                currentPage++;
+
+                displayCountries();
+
+            }
+
+        }
+    );
+
+
+    pagination.appendChild(
+        nextButton
+    );
+
 }
 
 
@@ -421,7 +674,27 @@ document
     .getElementById("sortSelect")
     .addEventListener(
         "change",
-        displayCountries
+        () => {
+
+            currentPage = 1;
+
+            displayCountries();
+
+        }
+    );
+
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "input",
+        () => {
+
+            currentPage = 1;
+
+            displayCountries();
+
+        }
     );
 
 
